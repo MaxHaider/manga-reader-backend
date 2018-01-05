@@ -7,6 +7,7 @@ var Manga = mongoose.model('Manga');
 
 
 function connectToDb() {
+    mongoose.Promise = global.Promise;
     mongoose.connect(config.BASE_DB_URI, {
         useMongoClient: true
     });
@@ -29,6 +30,7 @@ exports.getDirectory = function (req, res) {
 
 exports.getAll = function (req, res) {
     connectToDb();
+    console.log("jerome");
     Manga.find({}, function (err, docs) {
         var json = "";
         var status = 400;
@@ -41,8 +43,9 @@ exports.getAll = function (req, res) {
         }
         res.status(status)
         res.json(json);
+        disconnectFromDb();
 
-    }).then(disconnectFromDb());
+    })
 };
 
 exports.add = function (req, res) {
@@ -62,6 +65,7 @@ exports.add = function (req, res) {
         
         res.status(status);
         res.json(result);
-    }).then(disconnectFromDb());
+        disconnectFromDb();
+    })
 }
 

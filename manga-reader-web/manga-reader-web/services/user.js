@@ -10,6 +10,7 @@ var passport = require('passport');
 
 
 function connectToDb() {
+    mongoose.Promise = global.Promise;
     mongoose.connect(config.BASE_DB_URI, {
         useMongoClient: true
     });
@@ -32,7 +33,8 @@ exports.register = function (req, res) {
         res.json({
             "token": token
         });
-    }).then(disconnectFromDb());
+        disconnectFromDb()
+    })
 };
 
 exports.login = function (req, res) {

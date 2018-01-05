@@ -9,6 +9,7 @@ var Reading = mongoose.model('Reading');
 var async = require('async');
 
 function connectToDb() {
+    mongoose.Promise = global.Promise;
     mongoose.connect(config.BASE_DB_URI, {
         useMongoClient: true
     });
